@@ -8,23 +8,23 @@ const Testimonials = () => {
   const testimonials = [
     {
       image: testimonial1,
-      name: "Sarah Mitchell",
-      role: "Provider",
-      feedback: "The telemedicine service has been a game-changer for me. I can now consult with specialists without traveling long distances. The quality of care is exceptional, and the platform is incredibly easy to use.",
+      name: "Dr. Jennifer Collins",
+      role: "Oral & Maxillofacial Surgeon",
+      feedback: "OnlineMedSys has streamlined every aspect of our practice. From referrals and scheduling to clinical documentation and billing, everything works together seamlessly, allowing our team to focus more on patient care.",
       rating: 5,
     },
     {
       image: testimonial2,
       name: "Dr. Robert Chen",
-      role: "Healthcare Professional",
-      feedback: "As a physician, I'm impressed by the AI diagnostic tools. They've significantly improved our accuracy in early disease detection. The integration with our existing systems was seamless.",
+      role: "Orthodontist",
+      feedback: "OnlineMedSys combines practice management, EMR, referrals, and revenue management into one intuitive platform. It has made our practice more efficient while supporting the high standard of care we strive to provide.",
       rating: 5,
     },
     {
       image: testimonial3,
       name: "Michael Torres",
-      role: "Provider",
-      feedback: "The personalized care approach made all the difference in my treatment journey. The medical team was always available, and the coordination between different specialists was outstanding.",
+      role: "Oral Surgeon",
+      feedback: "The seamless integration between referrals, clinical documentation, and patient management has enhanced collaboration with referring providers and improved the overall efficiency of our practice.",
       rating: 5,
     },
   ];
@@ -67,7 +67,7 @@ const Testimonials = () => {
                   </div>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  "{testimonial.feedback}"
+                  {testimonial.feedback}
                 </p>
               </CardContent>
             </Card>
