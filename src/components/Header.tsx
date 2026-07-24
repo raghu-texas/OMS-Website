@@ -12,7 +12,7 @@ const navItems = [
       isRoute: true
     },
     {
-      name: "Apps & Services",
+      name: "Applications",
       href: "/products-services",
       icon: Package,
       isRoute: true

@@ -51,59 +51,86 @@ const BookDemo = () => {
   }
 
   async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const validation = validate();
-    const missing = Object.values(validation).filter(Boolean);
-    if (missing.length > 0) {
-      toast({
-        variant: "destructive",
-        title: "Missing required fields",
-        description: "Please fill out: " + missing.join(", "),
-      });
-      return;
-    }
-    track("book_demo_submit", { form });
-    try {
-      const response = await fetch("http://localhost:3001/api/book-demo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (response.ok) {
-        toast({
-          title: "Thanks! We will contact you soon.",
-          description: "Your demo request has been submitted successfully.",
-        });
-        setForm({
-          firstName: "",
-          lastName: "",
-          email: "",
-          mobile: "",
-          practice: "",
-          surgeons: "",
-          offices: "",
-          description: "",
-          appointmentDate: "",
-          appointmentTime: "",
-          timeOfDay: "morning",
-        });
-        setErrors({});
-      } else {
-        const data = await response.json();
-        toast({
-          variant: "destructive",
-          title: "Failed to submit demo request",
-          description: data.error || "An error occurred. Please try again later.",
-        });
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Network error",
-        description: "Could not connect to server. Please try again later.",
-      });
-    }
+  e.preventDefault();
+
+  const validation = validate();
+  const missing = Object.values(validation).filter(Boolean);
+
+  if (missing.length > 0) {
+    toast({
+      variant: "destructive",
+      title: "Missing required fields",
+      description: "Please fill out: " + missing.join(", "),
+    });
+    return;
   }
+
+  track("book_demo_submit", { form });
+
+  try {
+  // ✅ form-urlencoded (IMPORTANT)
+    const params = new URLSearchParams({
+  MailType: "Demo",
+  ApptDate: new Date(form.appointmentDate).toLocaleDateString("en-US"),
+  ApptSession: form.timeOfDay === "afternoon" ? "Afternoon" : "Morning",
+  ApptTime: form.appointmentTime,
+  FirstName: form.firstName.trim(),
+  LastName: form.lastName.trim(),
+  Email: form.email.trim(),
+  CellPhone: form.mobile, // ✅ FIXED
+  PracticeName: form.practice.trim(),
+  TotalSurgeons: String(form.surgeons),
+  TotalOffices: String(form.offices),
+  Message: form.description || "Request the demo for OMS apps",
+});
+
+    const response = await fetch(
+      "https://pm4-ppd-rest-cd.onlinemedsys.com/api/email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: params.toString(),
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok && data.MailStatus === "Success") {
+      toast({
+        title: "Thanks! We will contact you soon.",
+        description:
+          "Your demo request has been submitted successfully.",
+      });
+
+      setForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobile: "",
+        practice: "",
+        surgeons: "",
+        offices: "",
+        description: "",
+        appointmentDate: "",
+        appointmentTime: "",
+        timeOfDay: "morning",
+      });
+
+      setErrors({});
+    } else {
+      throw new Error("API failed");
+    }
+  } catch (error) {
+    console.error(error);
+    toast({
+      variant: "destructive",
+      title: "Failed to submit demo request",
+      description: "Please try again later.",
+    });
+  }
+}
 
   return (
     <section

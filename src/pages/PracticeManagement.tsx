@@ -1,73 +1,72 @@
 // Removed Card components to make content plain without boxes
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import featuresChart from "@/assets/features-chart.avif";
-import smsImage from "@/assets/sms-dashboard.jfif";
+import smsImage from "@/assets/sms-dashboard.png";
 import implantImage from "@/assets/implant-tracking.png";
 import schedulerImage from "@/assets/scheduler-management.png";
 import ImageWithFallback from "@/components/ImageWithFallback";
 
 const PracticeManagement = () => {
   const navigate = useNavigate();
-  const ZoomableImage = ({ src, alt }: { src: string; alt: string }) => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const [lens, setLens] = useState({ visible: false, rect: null as DOMRect | null });
+  const ZoomableImage = ({
+    src,
+    alt,
+    borderWidth = 15,
+    borderColor = "#000",
+    rounded = true,
+    imageFit = "contain",
+  }: { src: string; alt: string; borderWidth?: number; borderColor?: string; rounded?: boolean; imageFit?: "contain" | "cover" | "fill" }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-    const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setLens({ visible: true, rect });
-    };
-
-    const handleLeave = () => setLens({ visible: false, rect: null });
-
-    const rect = lens.rect;
-    const originX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
-    const originY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
-    const screenCenterX = window.innerWidth / 2;
-    const screenCenterY = window.innerHeight / 2;
-    const translateX = screenCenterX - originX;
-    const translateY = screenCenterY - originY + 36;
+    const roundedClass = rounded ? "rounded-2xl" : "rounded-none";
+    const imageClassName = `w-full h-full ${imageFit === "cover" ? "object-cover" : imageFit === "fill" ? "object-fill" : "object-contain"}`;
 
     return (
-      <div className="relative w-full mx-auto">
-        <div
-          ref={containerRef}
-          className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow border w-[90%] mx-auto bg-white"
-          style={{ borderColor: '#D2DEF9' }}
-          onMouseMove={handleMove}
-          onMouseEnter={handleMove}
-          onMouseLeave={handleLeave}
-        >
-          <ImageWithFallback
-            src={src}
-            alt={alt}
-            className="w-full h-[360px] object-cover rounded-2xl"
-          />
+      <>
+        <div className="relative w-full mx-auto">
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="w-full text-left cursor-zoom-in"
+            aria-label={`Open ${alt}`}
+          >
+            <div
+              className={`relative ${roundedClass} overflow-hidden shadow-lg hover:shadow-xl transition-shadow border w-[90%] mx-auto bg-white aspect-[15/10] flex items-center justify-center`}
+              style={{ borderColor: borderColor, borderWidth: `${borderWidth}px` }}
+            >
+              <ImageWithFallback
+                src={src}
+                alt={alt}
+                className={`${imageClassName} ${roundedClass}`}
+              />
+            </div>
+          </button>
         </div>
-        <div
-          className="pointer-events-none fixed w-[877px] h-[582px] rounded-2xl border shadow bg-white overflow-hidden"
-          style={{
-            borderColor: '#D2DEF9',
-            zIndex: 50,
-            left: originX,
-            top: originY,
-            transform: lens.visible 
-              ? `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(1)` 
-              : 'translate(-50%, -50%) scale(0.2)',
-            opacity: lens.visible ? 1 : 0,
-            transition: 'all 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            visibility: lens.visible ? 'visible' : 'hidden',
-          }}
-        >
-          <ImageWithFallback
-            src={src}
-            alt={`${alt} preview`}
-            className="w-full h-full object-contain"
-          />
-        </div>
-      </div>
+
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogContent className="fixed inset-0 z-50 flex items-center justify-center border-0 bg-black/80 p-2 sm:p-4 left-0 top-0 translate-x-0 translate-y-0 w-auto max-w-none">
+            <DialogTitle className="sr-only">{alt}</DialogTitle>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="absolute right-4 top-4 z-10 rounded-full bg-red-600 p-2 text-white shadow-lg hover:bg-red-700"
+              aria-label="Close image"
+            >
+              <X size={20} />
+            </button>
+            <div className="flex items-center justify-center max-h-[92vh] max-w-[95vw] overflow-hidden rounded-xl bg-white">
+              <ImageWithFallback
+                src={src}
+                alt={alt}
+                className="max-h-[92vh] max-w-[95vw] w-auto h-auto object-contain"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+      </>
     );
   };
 
@@ -146,7 +145,7 @@ const PracticeManagement = () => {
         {/* Scheduler Management section: image-left, content-right */}
         <div className="mb-8 rounded-2xl p-6 border" style={{ backgroundColor: '#FAFCFD', borderColor: '#D2DEF9' }}>
           <div className="grid lg:grid-cols-2 gap-6 items-stretch">
-            <ZoomableImage src={schedulerImage} alt="Scheduler Management" />
+            <ZoomableImage src={schedulerImage} alt="Scheduler Management" borderWidth={15} borderColor="#000" rounded={false} imageFit="fill" />
             <div className="h-full flex flex-col justify-center">
               <div className="mb-2">
                 <h3 className="text-2xl font-semibold text-foreground">Scheduler Management</h3>
@@ -179,14 +178,14 @@ const PracticeManagement = () => {
                 <li>Campaign and template performance</li>
               </ul>
             </div>
-            <ZoomableImage src={smsImage} alt="SMS Dashboard" />
+            <ZoomableImage src={smsImage} alt="SMS Dashboard" borderWidth={15} borderColor="#000" rounded={false} imageFit="fill" />
           </div>
         </div>
 
         {/* Implant Tracking section: image-left, content-right */}
         <div className="mb-10 rounded-2xl p-6 border" style={{ backgroundColor: '#FAFCFD', borderColor: '#D2DEF9' }}>
           <div className="grid lg:grid-cols-2 gap-6 items-stretch">
-            <ZoomableImage src={implantImage} alt="Implant Tracking" />
+            <ZoomableImage src={implantImage} alt="Implant Tracking" borderWidth={15} borderColor="#000" rounded={false} imageFit="fill" />
             <div className="h-full flex flex-col justify-center">
               <div className="mb-2">
                 <h3 className="text-2xl font-semibold text-foreground">Implant Tracking</h3>

@@ -21,6 +21,7 @@ import revenuewellLogo from "@/assets/RevenueWell.png";
 import texasaiLogo from "@/assets/Texasai-Logo.png";
 import twilioLogo from "@/assets/twilio.png";
 import waystarLogo from "@/assets/waystar.png";
+import sotaCloudLogo from "@/assets/SotaCloudLogo.png";
 
 const partnerLogos = [
   { name: "Criticare", src: criticareLogo },
@@ -34,6 +35,7 @@ const partnerLogos = [
   { name: "Texas AI", src: texasaiLogo },
   { name: "Twilio", src: twilioLogo },
   { name: "Waystar", src: waystarLogo },
+  { name: "SotaCloud", src: sotaCloudLogo },
 ];
 
 const AboutUs = () => {
@@ -49,7 +51,7 @@ const AboutUs = () => {
               <div className="flex justify-center">
                 <div
                   className="relative inline-block"
-                  style={{ width: 'min(100%, 56rem)', height: 'fit-content' }}
+                  style={{ width: 'min(100%, 56rem)', height: 'auto' }}
                 >
                   {/* Horizontal gradient background */}
                   <div
@@ -85,25 +87,11 @@ const AboutUs = () => {
 
         <section className="pt-4 pb-8 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
               {/* Content - Left Side */}
               <div className="space-y-6">
-                {/* Modern Title Container */}
-                <div className="relative">
-                  <div 
-                    className="inline-block px-8 py-4 rounded-lg shadow-lg transform -skew-x-2"
-                    style={{ backgroundColor: '#980826' }}
-                  >
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white transform skew-x-2">
-                      WELCOME TO ONLINEMEDSYS.COM
-                    </h2>
-                  </div>
-                  <div 
-                    className="absolute -bottom-2 -right-2 w-full h-full rounded-lg -z-10 opacity-30"
-                    style={{ backgroundColor: '#980826' }}
-                  />
-                </div>
-                <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
+                {/* Title container removed per request */}
+                <div className="space-y-4 mt-4 text-lg text-muted-foreground leading-relaxed">
                   <p className="font-semibold text-foreground">
                     OnlineMedSys.com is your complete Practice Management Solution.
                   </p>
@@ -118,11 +106,11 @@ const AboutUs = () => {
               </div>
 
               {/* Image - Right Side */}
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[17/10]">
                 <ImageWithFallback
                   src={teamCollaboration}
                   alt="OnlineMedSys Team"
-                  className="w-full h-[360px] object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -164,11 +152,11 @@ const AboutUs = () => {
               >
                 {/* Image */}
                 <div className={`${idx % 2 === 1 ? "lg:order-2" : ""}`}>
-                  <div className={`rounded-2xl overflow-hidden shadow-lg ${idx < 3 ? 'w-[90%] mx-auto' : ''}`}>
+                  <div className="rounded-2xl overflow-hidden shadow-lg w-[90%] mx-auto">
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="w-full h-[360px] object-cover"
+                      className="w-full h-full object-cover aspect-[16/10]"
                       loading="lazy"
                       decoding="async"
                     />

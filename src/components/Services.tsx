@@ -14,7 +14,7 @@ const Services = () => {
     },
     {
       icon: Workflow,
-      title: "EMR Systems",
+      title: "EMR System",
       description: "Robust electronic medical records platform enabling efficient clinical documentation, interoperability, and decision support."
     },
     {
@@ -85,7 +85,7 @@ const Services = () => {
           const isHR = service.title === "Human Resources";
           const isConsent = service.title === "Consent Forms";
           const isScan = service.title === "Scan Application";
-          const isEMR = service.title === "EMR Systems";
+          const isEMR = service.title === "EMR System";
           const isCredential = service.title === "Provider Credentialing";
           const isAP = service.title === "Accounts Payable";
           const isSMS = service.title === "SMS Dashboard";

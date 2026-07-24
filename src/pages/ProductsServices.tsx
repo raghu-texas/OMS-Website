@@ -27,7 +27,7 @@ const ProductsServices = () => {
     },
     {
       icon: Server,
-      title: "EMR Systems",
+      title: "EMR System",
       id: "emr-systems",
       description: "Robust electronic medical records platform enabling efficient clinical documentation, interoperability, and decision support."
     },
@@ -115,7 +115,7 @@ const ProductsServices = () => {
                     <div className="h-1 w-12 bg-gradient-to-l from-transparent to-[#2589CB] rounded-full" />
                   </div>
                   <h1 className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight text-[#0D47A1] whitespace-nowrap">
-                    Apps & <span className="text-[#2589CB]">Services</span>
+                    Applications <span className="text-[#2589CB]"></span>
                   </h1>
                   {/* Decorative bottom marker */}
                   <div className="flex items-center justify-center gap-4 mt-0">
@@ -157,7 +157,7 @@ const ProductsServices = () => {
           
 
           {/* Applications Header */}
-          <h2 className="text-2xl font-bold mb-4 text-[#2589CB] text-center">Applications</h2>
+          <h2 className="text-2xl font-bold mb-4 text-[#2589CB] text-center">All Applications</h2>
           {/* Service Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => {
@@ -167,7 +167,7 @@ const ProductsServices = () => {
               const isHR = service.title === "Human Resources";
               const isConsent = service.title === "Consent Forms";
               const isScan = service.title === "Scan Application";
-              const isEMR = service.title === "EMR Systems";
+              const isEMR = service.title === "EMR System";
               const isCredential = service.title === "Provider Credentialing";
               const isAP = service.title === "Accounts Payable";
               const isPatientPortal = service.title === "Patient Portal";
@@ -188,7 +188,7 @@ const ProductsServices = () => {
                     e.currentTarget.style.backgroundColor = '#0066b1';
                   }}
                   onClick={() => {
-                    if (isPractice) return goTo("/practice-management");
+                    if (isPractice) return goTo("/services/practice");
                     if (isRCM) return goTo("/services/rcm");
                     if (isHR) return goTo("/services/hr");
                     if (isConsent) return goTo("/services/consent");

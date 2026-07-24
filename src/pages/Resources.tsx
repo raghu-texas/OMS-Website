@@ -149,8 +149,8 @@ const Resources = () => {
               A business class connection of 300 Mbps minimum is recommended for offices up to 10 computers. A second, backup internet connection configured by an IT tech for firewall failover is strongly recommended.
             </div>
           </div>
-          <div className="rounded-2xl overflow-hidden mt-24 lg:order-2">
-            <img src={monitorImg} alt="Monitor" className="w-full h-[360px] object-cover" loading="lazy" decoding="async" />
+          <div className="rounded-2xl overflow-hidden mt-24 lg:order-2 bg-black flex items-center justify-center" style={{ height: 'auto' }}>
+            <img src={monitorImg} alt="Monitor" className="w-[105%] h-100% max-h-100% object-cover transform scale-[1.02]" loading="lazy" decoding="async" />
           </div>
         </div>
 

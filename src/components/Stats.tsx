@@ -10,11 +10,11 @@ const Stats = () => {
       label: "Practices",
       description: "Trusted by over 100 practices"
     },
-    {
-      number: "10M+",
-      label: "Patient Records",
-      description: "Securely managed"
-    },
+    // {
+    //   number: "10M+",
+    //   label: "Patient Records",
+    //   description: "Securely managed"
+    // },
     {
       number: "99.99%",
       label: "Availability",
@@ -29,15 +29,9 @@ const Stats = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stats.map((stat, index) => {
-            // Move only 100+ Practices and 10M+ Patient Records 0.5 inch to the right
             const style: React.CSSProperties = { animationDelay: `${index * 0.1}s` };
-            if (stat.number === "100+" || stat.number === "10M+") {
-              style.marginLeft = '0.5in';
-            } else {
-              style.marginLeft = 0;
-            }
             return (
               <div
                 key={index}
